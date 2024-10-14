@@ -20,7 +20,11 @@ CLASS zcl_qs_validate_address DEFINITION
     INTERFACES if_oo_adt_classrun.
 ENDCLASS.
 
-CLASS zcl_qs_validate_address IMPLEMENTATION.
+
+
+CLASS ZCL_QS_VALIDATE_ADDRESS IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
     DATA ls_input             TYPE /goog/cl_addrvaldn_v1=>ty_012.
@@ -28,6 +32,7 @@ CLASS zcl_qs_validate_address IMPLEMENTATION.
 
     TRY.
         " Open HTTP connection
+        " The client key DEMO_ADDR_VAL is an example, replace this with actual value
         lo_address_validator = NEW #( iv_key_name = 'DEMO_ADDR_VAL' ).
 
         " Pass the address to be validated
@@ -47,7 +52,7 @@ CLASS zcl_qs_validate_address IMPLEMENTATION.
           out->write( 'Address is complete' ).
         ENDIF.
 
-      CATCH /goog/cx_sdk INTO DATA(lo_exception). " TODO: variable is assigned but never used (ABAP cleaner)
+      CATCH /goog/cx_sdk INTO DATA(lo_exception).
         " Handle exception here
     ENDTRY.
   ENDMETHOD.

@@ -34,7 +34,8 @@ CLASS ZCL_QS_TRANSLATE_TEXT IMPLEMENTATION.
     DATA lo_translate    TYPE REF TO /goog/cl_translation_v2.
 
     TRY.
-        " Instantiate API client stub
+        " Open HTTP Connection
+        " The client key DEMO_TRANSLATE is an example, replace this with actual value
         lo_translate = NEW #( iv_key_name = 'DEMO_TRANSLATE' ).
 
         " Pass the text to be translated to the required parameter

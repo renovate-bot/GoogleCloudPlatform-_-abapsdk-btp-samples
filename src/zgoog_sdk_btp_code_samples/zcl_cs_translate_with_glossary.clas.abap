@@ -21,7 +21,10 @@ CLASS zcl_cs_translate_with_glossary DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_cs_translate_with_glossary IMPLEMENTATION.
+
+CLASS ZCL_CS_TRANSLATE_WITH_GLOSSARY IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     " Data Declarations
     DATA lv_p_projects_id  TYPE string.
@@ -32,22 +35,25 @@ CLASS zcl_cs_translate_with_glossary IMPLEMENTATION.
     TRY.
 
         " Open HTTP Connection
-        " Pass the configured client key
+        " Pass the configured client key, TRANSLATE_DEMO is used as example, replace it with actual value
         DATA(lo_translate) = NEW /goog/cl_translation_v3( iv_key_name = 'TRANSLATE_DEMO' ).
 
         " Derive project id
         lv_p_projects_id   = lo_translate->gv_project_id.
-        " Provide a location id, here 'us-central1' is uses as example
-        lv_p_locations_id  = 'us-central1'.
-        " Provide MIME type
-        ls_input-mime_type            = 'text/plain'.
-        " Target language code in BCP-47 format
 
+        " Provide a location id, here 'us-central1' is uses as example, replace it with actual value
+        lv_p_locations_id  = 'us-central1'.
+
+        " Provide MIME type. The value used below is an example, replace it with actual value.
+        ls_input-mime_type = 'text/plain'.
+
+        " Target language code in BCP-47 format. The value used below is an example, replace it with actual value.
         ls_input-target_language_code = 'esES'.
 
-        " Provide glossary id
+        " Provide glossary id. The value used below is an example, replace it with actual value.
         ls_input-glossary_config-glossary = 'fi_glossary_en_to_es'.
 
+        " Pass the text to be translated. The value used below is an example, replace it with actual value.
         ls_input-contents = VALUE #( ( |Debit amount carry forwarded for fiscal year| ) ).
 
         " Call the API

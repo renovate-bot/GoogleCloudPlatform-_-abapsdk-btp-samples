@@ -21,7 +21,10 @@ CLASS zcl_qs_process_documents DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_qs_process_documents IMPLEMENTATION.
+
+CLASS ZCL_QS_PROCESS_DOCUMENTS IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     DATA lv_p_projects_id   TYPE string.
     DATA lv_p_locations_id  TYPE string.
@@ -32,6 +35,7 @@ CLASS zcl_qs_process_documents IMPLEMENTATION.
     TRY.
 
         " Open HTTP connection
+        " The client key DEMO_DOC_PROCESSING is an example, replace this with actual value
         lo_docai = NEW #( iv_key_name = 'DEMO_DOC_PROCESSING' ).
 
         " Populate relevant parameters to be passed to API
@@ -62,7 +66,7 @@ CLASS zcl_qs_process_documents IMPLEMENTATION.
         " Close HTTP connection
         lo_docai->close( ).
 
-      CATCH /goog/cx_sdk INTO DATA(lo_exception). " TODO: variable is assigned but never used (ABAP cleaner)
+      CATCH /goog/cx_sdk INTO DATA(lo_exception).
         " Handle exception here
     ENDTRY.
   ENDMETHOD.

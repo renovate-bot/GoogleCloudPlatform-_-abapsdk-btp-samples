@@ -21,7 +21,10 @@ CLASS zcl_qs_publish_messages DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_qs_publish_messages IMPLEMENTATION.
+
+CLASS ZCL_QS_PUBLISH_MESSAGES IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
     DATA ls_input         TYPE /goog/cl_pubsub_v1=>ty_023.
@@ -31,10 +34,13 @@ CLASS zcl_qs_publish_messages IMPLEMENTATION.
 
     TRY.
         " Open HTTP connection
+        " The client key DEMO_PUBSUB is an example, replace this with actual value
         lo_pubsub = NEW /goog/cl_pubsub_v1( iv_key_name = 'DEMO_PUBSUB' ).
 
         " Pass the relevant input parameters
+        " The value shown below is an example. Replace it with actual value
         lv_p_topics_id = 'SAMPLE_TOPIC_01'.
+
         lv_p_projects_id = lo_pubsub->gv_project_id.
         APPEND VALUE #( data = cl_http_utility=>encode_base64( 'Hello World!' ) )
                TO ls_input-messages.
@@ -60,7 +66,7 @@ CLASS zcl_qs_publish_messages IMPLEMENTATION.
         lo_pubsub->close( ).
 
       CATCH /goog/cx_sdk INTO DATA(lo_exception).
-        MESSAGE lo_exception->get_text( ) TYPE 'E'.
+        " Handle exception here
     ENDTRY.
   ENDMETHOD.
 ENDCLASS.

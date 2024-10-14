@@ -21,42 +21,47 @@ CLASS zcl_cs_create_glossary DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_cs_create_glossary IMPLEMENTATION.
+
+CLASS ZCL_CS_CREATE_GLOSSARY IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
+    "Data decalarations
     DATA lv_p_projects_id  TYPE string.
     DATA lv_p_locations_id TYPE string.
     DATA ls_input          TYPE /goog/cl_translation_v3=>ty_022.
 
     TRY.
-
         " Open HTTP Connection
-        " Pass the configured client key
+        " Pass the configured client key, TRANSLATE_DEMO is used as example, replace it with actual value
         DATA(lo_translate) = NEW /goog/cl_translation_v3( iv_key_name = 'TRANSLATE_DEMO' ).
 
         " Derive project id from the object
         lv_p_projects_id  = lo_translate->gv_project_id.
-        " Set a location id, 'us-central1' is used as example
+
+        " Set a location id, 'us-central1' is used as example, replace it with actual value
         lv_p_locations_id = 'us-central1'.
 
-        " Pass a display name
+        " Pass a display name. The value passed below is an example, replace it with actual value
         ls_input-display_name = 'Finance Term Glossary EN to ES'.
 
-        " Source language in BCP-47 format
+        " Source language in BCP-47 format. The value passed below is an example, replace it with actual value
         ls_input-language_pair-source_language_code = 'en-US'.
-        " Target language in BCP-47 format
 
+        " Target language in BCP-47 format. The value passed below is an example, replace it with actual value
         ls_input-language_pair-target_language_code = 'es-ES'.
+
         " Complete name of glossary has following format:
         " projects/<PROJECT_ID>/locations/<LOCATION_ID>/glossaries/<GLOSSARY_ID>
+        " The value used for GLOSSARY ID is an example, replace it with actual value.
         CONCATENATE 'projects/'
                      lo_translate->gv_project_id
                      '/locations/us-central1/glossaries/'
                      'FI_GLOSSARY_EN_ES'
                     INTO ls_input-name.
 
-        " Pass the complete path of glossary file which is stored in GCS bucket
-        " Below example shows a file named: fi_glossary_data.tsv is stored in a GCS bucket named: glossary_repo
-        ls_input-input_config-gcs_source-input_uri = 'gs://glossary_repo/fi_glossary_data.tsv'.
+       " TODO: Pass the complete path of glossary file which is stored in GCS bucket
+       " ls_input-input_config-gcs_source-input_uri =
 
         " Call API method
         lo_translate->create_glossaries( EXPORTING iv_p_projects_id  = lv_p_projects_id
